@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>Strands Copy</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="main.js" async></script>
+    <script src="main.js" type="module"></script>
   </head>
   <body>
     <header><h1 id="game-title">Lydia's Strands Dupe</h1></header>
@@ -14,7 +14,13 @@
           <div id="theme-header"><h3>TODAY'S THEME</h3></div>
           <h1>No dice!</h1>
         </div>
-        <div id="grid"></div>
+        <div id="container">
+          <div id="grid"></div>
+          <div id="connections-overlay">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+            </svg>
+          </div>
+        </div>
       </div>
     </main>
   </body>

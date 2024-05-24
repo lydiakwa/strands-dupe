@@ -21,6 +21,10 @@ header {
   gap: 50px;
 }
 
+#container {
+  position: relative;
+}
+
 #grid {
   display: grid;
   width: 324px;
@@ -43,8 +47,13 @@ header {
   font-size: 26px;
 }
 
-#grid > div > button:focus {
-  background-color: #dad8c5;
+#connections-overlay {
+  display: grid;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 
 #theme-box {
