@@ -28,6 +28,8 @@ header {
 #current-word {
   font-size: 30px;
   margin: 10px;
+  height: 36px;
+  text-align: center;
 }
 
 #grid {
@@ -61,13 +63,20 @@ header {
   z-index: -1;
 }
 
+#left-side {
+  width: 60%;
+  align-self: center;
+  text-align: center;
+}
+
 #theme-box {
   border: solid 1px #bcbcbc;
   border-radius: 6px;
-  width: 60%;
   margin: 10px;
-  text-align: center;
-  align-self: center;
+}
+
+#words-left {
+  font-size: 24px;
 }
 
 #theme-header {

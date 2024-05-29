@@ -7,6 +7,9 @@ const svg = document.querySelector('#connections-overlay svg');
 const gridContainer = document.querySelector('#grid');
 const table = document.querySelector('table');
 const currentWordContainer = document.querySelector('#current-word');
+const foundCount = document.querySelector('#found');
+const totalCount = document.querySelector('#total');
+const themeHeader = document.querySelector('#theme-box');
 
 //data
 const board = [
@@ -29,11 +32,20 @@ const words = [
   'MAFIA',
 ];
 
-const theme = 'No Dice!';
+let currentWord = [];
+
+const themer = 'No Dice!';
 const totalWords = words.length;
+let wordsFound = 0;
 
-const currentWord = [];
+//style and dynamic theme stuff
+themeHeader.querySelector(':scope > h1').innerText = themer;
+totalCount.innerText = totalWords;
+foundCount.innerText = wordsFound;
+totalCount.style.fontWeight = 600;
+foundCount.style.fontWeight = 600;
 
+//methods and behaviours yada
 const createTable = () => {
   for (let y = 0; y < board.length; y++) {
     let row = board[y];
@@ -85,9 +97,12 @@ const updateTable = () => {
   updateCurrentWord();
 };
 
+const updateWordCount = () => {
+  wordsFound += 1;
+  foundCount.innerText = wordsFound;
+};
+
 const canAddLetter = ({ x, y }) => {
-  // TODO: implement this to check if the new letter is allowed based on the last letter in currentWord
-  // first letter always gets added, possibly should move this check into event listener?
   if (currentWord.length === 0) {
     return true;
   }
@@ -111,17 +126,38 @@ const canAddLetter = ({ x, y }) => {
   return true;
 };
 
-const isWordValid = () => {};
-
 const isSubmittingWord = ({ x, y }) => {
   //length > 1
   //clicking (again) last letter in currentword
+  if (currentWord.length > 1) {
+    let lastLetterX = currentWord[currentWord.length - 1].x;
+    let lastLetterY = currentWord[currentWord.length - 1].y;
+
+    if (lastLetterX === x && lastLetterY === y) {
+      return true;
+    }
+  }
+};
+
+const isWordValid = (word) => {
+  let string = '';
+  for (const coords of word) {
+    string += board[coords.y][coords.x];
+  }
+  const check = words.some((word) => {
+    return string === word;
+  });
+  if (check) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 const displayCurrentWord = (x, y) => {
   const letter = document.createElement('span');
   currentWordContainer.appendChild(letter);
-  letter.innerHTML += board[y][x];
+  letter.innerText += board[y][x];
 };
 
 document.addEventListener('click', (e) => {
@@ -131,12 +167,25 @@ document.addEventListener('click', (e) => {
       parseInt(i, 10)
     );
 
+    if (isSubmittingWord({ x, y })) {
+      if (isWordValid(currentWord)) {
+        currentWord = [];
+        updateWordCount();
+        updateTable();
+      } else {
+        currentWord = [];
+        updateTable();
+        currentWordContainer.innerText = 'Not in word list';
+        return;
+      }
+    }
     if (canAddLetter({ x, y })) {
       currentWord.push({ x, y });
       updateTable();
       displayCurrentWord(x, y);
     }
   }
+  console.log(currentWord);
 });
 
 createTable();

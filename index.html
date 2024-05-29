@@ -9,22 +9,24 @@
   <body>
     <header><h1 id="game-title">Lydia's Strands Dupe</h1></header>
     <main>
-      <div id="current-word">
-        <!-- <span>T</span>
-        <span>T</span>
-        <span>T</span>
-        <span>T</span> -->
-      </div>
       <div id="game-square">
-        <div id="theme-box">
-          <div id="theme-header"><h3>TODAY'S THEME</h3></div>
-          <h1>No dice!</h1>
+        <div id="left-side">
+          <div id="theme-box">
+            <div id="theme-header"><h3>TODAY'S THEME</h3></div>
+            <h1></h1>
+          </div>
+          <p id="words-left">
+            <span id="found"></span> of <span id="total"></span> theme words
+            found.
+          </p>
         </div>
-
-        <div id="container">
-          <div id="grid"></div>
-          <div id="connections-overlay">
-            <svg version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div id="right-side">
+          <div id="current-word"></div>
+          <div id="container">
+            <div id="grid"></div>
+            <div id="connections-overlay">
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg"></svg>
+            </div>
           </div>
         </div>
       </div>
