@@ -1,0 +1,25 @@
+{
+  "name": "strands-dupe",
+  "version": "1.0.0",
+  "description": "Wherein I attempt to recreate the New York Time's Strands game for fun, but also maybe hire me?",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lydiakwa/strands-dupe.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lydiakwa/strands-dupe/issues"
+  },
+  "homepage": "https://github.com/lydiakwa/strands-dupe#readme",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}
