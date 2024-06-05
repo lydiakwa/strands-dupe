@@ -10,6 +10,9 @@ const currentWordContainer = document.querySelector('#current-word');
 const foundCount = document.querySelector('#found');
 const totalCount = document.querySelector('#total');
 const themeHeader = document.querySelector('#theme-box');
+const main = document.querySelector('main');
+const popupWindow = document.querySelector('#win-popup');
+const popupButton = document.querySelector('#win-popup button');
 
 //data
 const board = [
@@ -33,6 +36,8 @@ const words = [
 ];
 
 let currentWord = [];
+let answers = []; //[[{x,y}], [{x,y}]] ?
+let currentAnswer = []; //[{x,y}] -- like currentWord?
 
 const themer = 'No Dice!';
 const totalWords = words.length;
@@ -160,6 +165,62 @@ const displayCurrentWord = (x, y) => {
   letter.innerText += board[y][x];
 };
 
+const resetButtonColours = () => {
+  currentWord.forEach(({ x, y }) => {
+    const button = findButton({ x, y });
+    button.style.backgroundColor = null;
+  });
+};
+
+const setAnswerColour = () => {
+  const answerColour = 'rgb(175 223 239)';
+
+  // Set background color for each button
+  currentAnswer.forEach(({ x, y }) => {
+    const button = findButton({ x, y });
+    button.style.backgroundColor = answerColour;
+  });
+
+  // Get button coordinates and draw lines to connect buttons
+  const buttonCoordinates = currentAnswer.map(({ x, y }) => {
+    const button = findButton({ x, y });
+    return getRelativeCenterCoords(button, container);
+  });
+
+  drawLine(svg, buttonCoordinates, answerColour);
+};
+
+const storeAnswers = () => {
+  //current answer
+  currentAnswer = currentWord;
+  //all answers
+  answers.push(currentWord);
+};
+
+const checkIfWon = () => {
+  if (wordsFound === words.length) {
+    console.log('You won');
+    const popupHtml = `
+    <div id="win-popup">
+    <button>X</button>
+    <h1>You Win!</h1>
+    <div>No Dice!</div>
+  </div>
+    `;
+    main.innerHTML += popupHtml;
+    return;
+  }
+};
+
+if (popupWindow !== null) {
+  popupButton.addEventListener('click', (e) => {
+    if (e.target.matches('#popupWindow button')) {
+      console.log('hi');
+      popupWindow.remove();
+    }
+  });
+}
+
 document.addEventListener('click', (e) => {
   if (e.target.matches('#grid button')) {
     const button = e.target;
@@ -169,23 +230,42 @@ document.addEventListener('click', (e) => {
 
     if (isSubmittingWord({ x, y })) {
       if (isWordValid(currentWord)) {
+        resetButtonColours();
+
+        storeAnswers();
+        setAnswerColour();
+
         currentWord = [];
         updateWordCount();
         updateTable();
+        checkIfWon();
+        return;
       } else {
+        resetButtonColours();
         currentWord = [];
         updateTable();
         currentWordContainer.innerText = 'Not in word list';
         return;
       }
+    } else {
+      //if isSubmittingWord is false -- not selecting the last button in the chain
+      //we are either selecting the FIRST one and LENGTH is 1
+      //or we are selecting letters that are NOT FIRST or LAST
     }
     if (canAddLetter({ x, y })) {
+      if (currentWord.length === 0) {
+        currentWordContainer.innerText = '';
+      }
       currentWord.push({ x, y });
       updateTable();
       displayCurrentWord(x, y);
     }
+  } else {
+    return;
   }
-  console.log(currentWord);
+
+  console.log({ answers });
+  console.log({ currentWord });
 });
 
 createTable();
