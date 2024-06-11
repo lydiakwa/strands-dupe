@@ -134,7 +134,7 @@ const canAddLetter = ({ x, y }) => {
 const isSubmittingWord = ({ x, y }) => {
   //length > 1
   //clicking (again) last letter in currentword
-  if (currentWord.length > 1) {
+  if (currentWord.length !== 0) {
     let lastLetterX = currentWord[currentWord.length - 1].x;
     let lastLetterY = currentWord[currentWord.length - 1].y;
 
@@ -148,6 +148,9 @@ const isWordValid = (word) => {
   let string = '';
   for (const coords of word) {
     string += board[coords.y][coords.x];
+  }
+  if (string.length < 4) {
+    return false;
   }
   const check = words.some((word) => {
     return string === word;
@@ -231,26 +234,35 @@ document.addEventListener('click', (e) => {
     if (isSubmittingWord({ x, y })) {
       if (isWordValid(currentWord)) {
         resetButtonColours();
-
         storeAnswers();
         setAnswerColour();
-
         currentWord = [];
         updateWordCount();
         updateTable();
         checkIfWon();
         return;
       } else {
-        resetButtonColours();
-        currentWord = [];
-        updateTable();
-        currentWordContainer.innerText = 'Not in word list';
-        return;
+        if (currentWord.length <= 1) {
+          resetButtonColours();
+          currentWord = [];
+          updateTable();
+          currentWordContainer.innerText = '';
+          return;
+        } else if (currentWord.length > 1 && currentWord.length < 4) {
+          console.log('too short');
+          resetButtonColours();
+          currentWord = [];
+          updateTable();
+          currentWordContainer.innerText = 'Too short';
+          return;
+        } else {
+          resetButtonColours();
+          currentWord = [];
+          updateTable();
+          currentWordContainer.innerText = 'Not in word list';
+          return;
+        }
       }
-    } else {
-      //if isSubmittingWord is false -- not selecting the last button in the chain
-      //we are either selecting the FIRST one and LENGTH is 1
-      //or we are selecting letters that are NOT FIRST or LAST
     }
     if (canAddLetter({ x, y })) {
       if (currentWord.length === 0) {
@@ -263,8 +275,6 @@ document.addEventListener('click', (e) => {
   } else {
     return;
   }
-
-  console.log({ answers });
   console.log({ currentWord });
 });
 
