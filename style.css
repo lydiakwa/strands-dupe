@@ -1,46 +1,166 @@
 :root {
   --blue: #afdfef;
+  --mid-blue: #48a7c6;
   --gold: #f8cc2d;
   --grey: #bcbcbc;
   --shadow: #dfdfdf;
+  --dark-grey: #666566;
 }
 
-main {
-  /* width: 100vw; */
-  /* height: 100vh; */
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+@font-face {
+  font-family: 'franklin-light';
+  src: url('fonts/NYTFranklinLight.2dff27f7.otf') format('opentype');
 }
+
+@font-face {
+  font-family: 'franklin-bold';
+  src: url('fonts/NYTFranklinBold.c4803f55.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Karnak';
+  src: url('/fonts/NYTKarnakCondensed-Bold.7095c684.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'franklin-normal';
+  src: url('fonts/franklin-normal-600.3c74e72e.woff2') format('woff');
+}
+
+body {
+  font-family: 'franklin-light', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
 header {
   border-bottom: solid 1px var(--grey);
-  margin-bottom: 50px;
+  display: flex;
+  align-items: baseline;
+  padding-left: 128px;
+  padding-bottom: 24px;
+  padding-top: 44px;
+  gap: 24px;
+  /* width: 100%; */
+}
+
+header h1 {
+  font-family: 'karnak';
+  font-weight: 800;
+  margin: 0px;
+  line-height: 38px;
+  /* background-color: pink; */
+}
+
+header h2 {
+  font-family: 'franklin-light';
+  font-weight: lighter;
+  margin: 0px;
+  /* background-color: pink; */
 }
 
 #win-popup {
   box-shadow: 2px 2px 10px 4px var(--shadow);
   border-radius: 4px;
-  padding: 20px;
+  padding: 48px 56px;
   text-align: center;
-  align-self: center;
   position: absolute;
   z-index: 3;
   background-color: white;
-  left: 30%;
-  top: 30%;
-  width: 540px;
+  left: 25%;
+  top: 25%;
+  width: 400px;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 14px;
+  text-wrap: wrap;
 }
 
-#game-title {
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  margin-left: 50px;
-  margin-bottom: 8px;
+#win-popup h1,
+h3,
+p {
+  margin: 0px;
+}
+
+#win-popup h1 {
+  font-family: 'karnak';
+  margin-bottom: 22px;
+  font-size: 36px;
+}
+
+#win-blurb {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* return to game button */
+#return {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  stroke: black;
+  stroke-width: 4;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+#return p {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+#win-popup button svg {
+  padding: 16px;
+}
+
+#guess-circles {
+  fill: var(--mid-blue);
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(3, 36px);
+  gap: 2px;
+}
+
+#win-puzzle-info {
+  color: var(--dark-grey);
+  font-size: 16px;
+}
+
+#count-down {
+  font-size: 40px;
+  font-family: 'franklin-normal';
+}
+
+#win-end-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+#win-end-buttons button {
+  background-color: #f8cc2d;
+  border: none;
+  border-radius: 24px;
+  width: 100%;
+  height: 44px;
+  text-align: center;
+  padding: 0 17.55px;
 }
 
 #game-square {
   display: flex;
-  justify-content: space-between;
-  width: 90vw;
+  justify-content: center;
+  padding: 24px;
   gap: 50px;
+  margin-top: 12px;
+  padding: 24px;
+  margin: 24px;
 }
 
 #container {
@@ -48,10 +168,12 @@ header {
 }
 
 #current-word {
+  font-family: 'franklin-normal';
   font-size: 30px;
   margin: 10px;
   height: 36px;
   text-align: center;
+  font-weight: 600;
 }
 
 #grid {
@@ -86,10 +208,15 @@ header {
 }
 
 #left-side {
-  width: 60%;
+  width: 50%;
   align-self: center;
   text-align: center;
+  font-family: 'franklin-bold';
 }
+
+/* #right-side {
+  flex: 1;
+} */
 
 #theme-box {
   border: solid 1px var(--grey);
@@ -99,6 +226,11 @@ header {
 
 #words-left {
   font-size: 24px;
+  font-family: 'franklin-light';
+}
+
+#words-left span {
+  font-family: 'franklin-bold';
 }
 
 #theme-header {
@@ -108,7 +240,16 @@ header {
 }
 
 /* for some reason the header comes with margin built in? */
-#theme-header > h3 {
+#theme-header h3 {
   margin: 0px;
   padding: 2px;
+}
+
+footer {
+  text-align: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
 }

@@ -7,7 +7,58 @@
     <script src="main.js" type="module"></script>
   </head>
   <body>
-    <header><h1 id="game-title">Lydia's Strands Dupe</h1></header>
+    <div id="win-popup">
+      <button id="return">
+        <p>Back to puzzle</p>
+        <svg viewBox="0 0 24 24" width="18" height="18">
+          <line x1="2" y1="2" x2="22" y2="22" />
+          <line x1="22" y1="2" x2="2" y2="22" />
+        </svg>
+      </button>
+      <h1>You win!</h1>
+      <div id="win-blurb">
+        <div id="win-puzzle-info">
+          <p id="puzzle-count"></p>
+          <p id="win-popup-theme"></p>
+        </div>
+        <div id="guess-circles">
+          <svg viewBox="0 0 24 24" width="40" height="40">
+            <circle cx="12" cy="12" r="10" />
+          </svg>
+          <svg viewBox="0 0 24 24" width="40" height="40">
+            <circle cx="12" cy="12" r="10" />
+          </svg>
+          <svg viewBox="0 0 24 24" width="40" height="40">
+            <circle cx="12" cy="12" r="10" />
+          </svg>
+          <svg viewBox="0 0 24 24" width="40" height="40">
+            <circle cx="12" cy="12" r="10" />
+          </svg>
+          <svg viewBox="0 0 24 24" width="40" height="40">
+            <circle cx="12" cy="12" r="10" />
+          </svg>
+          <svg viewBox="0 0 24 24" width="40" height="40">
+            <circle cx="12" cy="12" r="10" />
+          </svg>
+        </div>
+        <div>
+          Nice job finding the theme 🔵 words and the 🟡 Spangram. You used x
+          hints 💡.
+        </div>
+        <div>
+          <h3>NEXT PUZZLE IN</h3>
+          <p id="count-down"></p>
+        </div>
+        <div id="win-end-buttons">
+          <button>Share Your Results</button>
+          <button>Play Tic Tac Toe</button>
+        </div>
+      </div>
+    </div>
+    <header>
+      <h1>Lydia's Strands Dupe</h1>
+      <h2></h2>
+    </header>
     <main>
       <div id="game-square">
         <div id="left-side">
@@ -32,5 +83,8 @@
         </div>
       </div>
     </main>
+    <footer>
+      <p>Recreated by Lydia Kwa for fun</p>
+    </footer>
   </body>
 </html>
